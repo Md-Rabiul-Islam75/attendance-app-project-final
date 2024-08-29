@@ -2,7 +2,7 @@ package com.example.projectnew;
 
 public class ClassItem {
 
-    String className;
+  private   String className;
 
     public String getClassName() {
         return className;
@@ -20,7 +20,7 @@ public class ClassItem {
         this.subjectName = subjectName;
     }
 
-    String subjectName;
+   private String subjectName;
 
     public ClassItem(String className, String subjectName) {
         this.className = className;
