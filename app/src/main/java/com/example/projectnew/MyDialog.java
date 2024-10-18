@@ -1,5 +1,6 @@
 package com.example.projectnew;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,10 +32,13 @@ public class MyDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         Dialog dialog = null;
+        assert getTag() != null;
         if(getTag().equals(CLASS_ADD_DIALOG))dialog=getAddClassDialog();
+        assert dialog != null;
         return dialog;
     }
 
+    @SuppressLint("SetTextI18n")
     private Dialog getAddClassDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
