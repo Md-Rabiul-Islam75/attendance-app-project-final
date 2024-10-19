@@ -12,6 +12,7 @@ public class ClassItem {
         this.className = className;
     }
 
+    private String subjectName;
     public String getSubjectName() {
         return subjectName;
     }
@@ -19,8 +20,6 @@ public class ClassItem {
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
-
-   private String subjectName;
 
     public ClassItem(String className, String subjectName) {
         this.className = className;
