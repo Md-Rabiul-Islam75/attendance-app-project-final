@@ -1,20 +1,16 @@
 package com.example.projectnew;
 
-import androidx.appcompat.app.AlertDialog;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         classAdapter = new ClassAdapter(this,classItems);
         recyclerView.setAdapter(classAdapter);
-        classAdapter.setOnItemClickListener(position -> gotoItemActivity(position));
+        classAdapter.setOnItemClickListener(this::gotoItemActivity);
 
         setToolbar();
     }
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton save = toolbar.findViewById(R.id.save);
 
 
-        title.setText("Attendence App");
+        title.setText(R.string.app_name);
         subtitle.setVisibility(View.GONE);
         back.setVisibility(View.INVISIBLE);
         save.setVisibility(View.INVISIBLE);
@@ -81,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
      MyDialog dialog = new MyDialog();
      dialog.show(getSupportFragmentManager(),MyDialog.CLASS_ADD_DIALOG);
 
-     dialog.setListener((className,subjectName) -> addClass(className,subjectName));
+     dialog.setListener(this::addClass);
 
     }
 
-    private void addClass(String className,String subjectName) {
+    @SuppressLint("NotifyDataSetChanged")
+    private void addClass(String className, String subjectName) {
 
         classItems.add(new ClassItem(className,subjectName));
         classAdapter.notifyDataSetChanged();
