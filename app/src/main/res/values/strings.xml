@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Attendance App</string>
     <string name="project_name">Student Attendance taking app Project</string>
+    <string name="add_student">ADD _STUDENT</string>
+    <string name="p">P</string>
+    <string name="sakib_ahmed">Sakib Ahmed</string>
 </resources>

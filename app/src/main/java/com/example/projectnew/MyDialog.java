@@ -14,9 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Objects;
+
 public class MyDialog extends DialogFragment {
 
       public static final String CLASS_ADD_DIALOG="addClass";
+    public static final String STUDENT_ADD_DIALOG="addStudent";
 
     private   OnClickListener Listener;
       public interface OnClickListener{
@@ -32,10 +35,44 @@ public class MyDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         Dialog dialog = null;
+
         assert getTag() != null;
         if(getTag().equals(CLASS_ADD_DIALOG))dialog=getAddClassDialog();
+        if (getTag().equals(STUDENT_ADD_DIALOG))dialog=getAddStudentDialog();
         assert dialog != null;
         return dialog;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private Dialog getAddStudentDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog, null);
+        builder.setView(view);
+
+        TextView title = view.findViewById(R.id.titleDialog);
+        title.setText("Add New Student");
+
+        EditText roll_edt = view.findViewById(R.id.edt01);
+        EditText name_edt = view.findViewById(R.id.edt02);
+
+
+        roll_edt.setHint("Roll");
+        name_edt.setHint("Name");
+        Button cancel = view.findViewById(R.id.cancel_btn);
+        Button add = view.findViewById(R.id.add_btn);
+
+        cancel.setOnClickListener(v-> dismiss());
+        add.setOnClickListener(v->{
+            String roll = roll_edt.getText().toString();
+            String name = name_edt.getText().toString();
+            if (!roll.isEmpty() && !name.isEmpty()) {
+                Listener.onClick(roll, name);
+                roll_edt.setText(String.valueOf(Integer.parseInt(roll) + 1));
+                name_edt.setText("");
+            }
+        });
+        return builder.create();
     }
 
     @SuppressLint("SetTextI18n")
