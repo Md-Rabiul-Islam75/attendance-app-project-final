@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -33,12 +34,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         TextView roll;
         TextView name;
         TextView status;
+        CardView cardView;
 
         public StudentViewHolder(@NonNull View itemView, final OnItemClickListener onItemClickListener) {
             super(itemView);
             roll = itemView.findViewById(R.id.roll);
             name = itemView.findViewById(R.id.name);
             status = itemView.findViewById(R.id.status);
+            cardView=itemView.findViewById(R.id.cardView);
 
             // Only set click listener if one is provided
             if (onItemClickListener != null) {
@@ -59,6 +62,18 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.roll.setText(studentItems.get(position).getRoll());
         holder.name.setText(studentItems.get(position).getName());
         holder.status.setText(studentItems.get(position).getStatus());
+        holder.cardView.setCardBackgroundColor(getColor(position));
+    }
+
+    public int getColor(int position) {
+        String status = studentItems.get(position).getStatus();
+        if (status.equals("P")) {
+            return context.getResources().getColor(R.color.green);
+        } else if (status.equals("A")) {
+            return context.getResources().getColor(R.color.red);
+        } else {
+            return context.getResources().getColor(R.color.white);
+        }
     }
 
     @Override
