@@ -97,7 +97,8 @@ public class StudentActivity extends AppCompatActivity {
     private void addStudent(String roll, String name) {
         if (roll != null && !roll.isEmpty() && name != null && !name.isEmpty()) {
             studentItems.add(new StudentItem(roll, name));
-            adapter.notifyItemInserted(studentItems.size()-1);
+           // adapter.notifyItemInserted(studentItems.size()-1);
+            adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
