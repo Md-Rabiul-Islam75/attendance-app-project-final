@@ -6,6 +6,11 @@
     app:cardCornerRadius="8dp"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
     <TextView
         android:id="@+id/titleDialog"
         android:layout_width="wrap_content"
@@ -75,10 +80,16 @@
 
                 />
 
-    </LinearLayout>
+        </LinearLayout>
+
+
 
 
     </RelativeLayout>
+
+    </LinearLayout>
+
+
 
 
 </androidx.cardview.widget.CardView>
