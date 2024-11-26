@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="29dp">
             <ImageButton
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
@@ -56,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
+                android:textColor="#239C28"
                 android:src="@drawable/icon_save"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"/>
