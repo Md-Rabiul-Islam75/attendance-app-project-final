@@ -26,8 +26,8 @@ public class DbHelper extends SQLiteOpenHelper {
             "UNIQUE (" + CLASS_NAME_KEY + "," + SUBJECT_NAME_KEY + ")" +
             ")";
 
-    private static final String DROP_CLASS_TABLE = "DROP TABLE IF EXISTS " + CLASS_TABLE_NAME;
-    private static final String SELECT_CLASS_TABLE = "SELECT * FROM "+CLASS_TABLE_NAME;
+    private static final String DROP_CLASS_TABLE = " DROP TABLE IF EXISTS " + CLASS_TABLE_NAME;
+    private static final String SELECT_CLASS_TABLE = " SELECT * FROM "+CLASS_TABLE_NAME;
 
 
     //student table
@@ -112,6 +112,17 @@ public class DbHelper extends SQLiteOpenHelper {
     Cursor getClassTable() {
         SQLiteDatabase database = this.getReadableDatabase();
         return database.rawQuery(SELECT_CLASS_TABLE,null);
+    }
+    int deleteClass(long cid) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        return database.delete(CLASS_TABLE_NAME, C_ID+"=?", new String[]{String.valueOf(cid)});
+    }
+    long updateClass(long cid, String className, String subjectName) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(CLASS_NAME_KEY, className);
+        values.put(SUBJECT_NAME_KEY, subjectName);
+        return database.update(CLASS_TABLE_NAME, values, C_ID+"=?", new String[]{String.valueOf(cid)});
     }
 
 }
