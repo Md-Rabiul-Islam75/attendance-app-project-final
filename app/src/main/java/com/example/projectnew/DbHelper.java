@@ -13,16 +13,16 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
 
     //class table
-    private  static final String CLASS_TABLE_NAME= "CLASS_TABLE";
-    private  static final String C_ID= "_CID";
-    private  static final String CLASS_NAME_KEY = "CLASS_NAME";
-    private  static final String SUBJECT_NAME_KEY = "SUBJECT_NAME";
+   private   static final String CLASS_TABLE_NAME= "CLASS_TABLE";
+    public   static final String C_ID= "_CID";
+    public   static final String CLASS_NAME_KEY = "CLASS_NAME";
+    public   static final String SUBJECT_NAME_KEY = "SUBJECT_NAME";
 
     private  static final String CREATE_CLASS_TABLE =
             "CREATE TABLE " +CLASS_TABLE_NAME + "("+
-            C_ID + "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-            CLASS_NAME_KEY + "TEXT NOT NULL," +
-            SUBJECT_NAME_KEY + "TEXT NOT NULL," +
+            C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            CLASS_NAME_KEY + " TEXT NOT NULL," +
+            SUBJECT_NAME_KEY + " TEXT NOT NULL," +
             "UNIQUE (" + CLASS_NAME_KEY + "," + SUBJECT_NAME_KEY + ")" +
             ")";
 
@@ -64,8 +64,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     "("+
                     STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
                     S_ID + " INTEGER NOT NULL, "+
-                    DATE_KEY+"DATE NOT NULL, "+
-                    STATUS_KEY + "TEXT NOT NULL, "+
+                    DATE_KEY+" DATE NOT NULL, "+
+                    STATUS_KEY + " TEXT NOT NULL, "+
                     " UNIQUE ("+ S_ID + "," + DATE_KEY+"),"+
                     "FOREIGN KEY ("+ S_ID+") REFERENCES "+ STUDENT_TABLE_NAME+ "( "+S_ID+")"+
                     ");";
