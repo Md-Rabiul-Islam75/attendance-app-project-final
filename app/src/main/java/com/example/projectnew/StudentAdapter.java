@@ -59,7 +59,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
-        holder.roll.setText(studentItems.get(position).getRoll());
+        holder.roll.setText(studentItems.get(position).getRoll()+"");
         holder.name.setText(studentItems.get(position).getName());
         holder.status.setText(studentItems.get(position).getStatus());
         holder.cardView.setCardBackgroundColor(getColor(position));

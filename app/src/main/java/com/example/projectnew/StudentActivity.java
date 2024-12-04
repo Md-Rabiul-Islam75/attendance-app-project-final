@@ -1,6 +1,7 @@
 package com.example.projectnew;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ public class StudentActivity extends AppCompatActivity {
     private int position;
     private StudentAdapter adapter;
     private final ArrayList<StudentItem> studentItems=new ArrayList<>();
+    private DbHelper dbHelper;
+    public int cid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +39,18 @@ public class StudentActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_student);
 
+        dbHelper = new DbHelper(this);
+
 
         Intent intent = getIntent();
         className = intent.getStringExtra("className");
         subjectName = intent.getStringExtra("subjectName");
         position = intent.getIntExtra("position", -1);
+        cid = intent.getIntExtra("cid", -1);
 
         setToolbar();
+        loadData();
+
         RecyclerView recyclerView = findViewById(R.id.student_recycler);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -51,6 +59,18 @@ public class StudentActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::changeStatus);
 
+    }
+
+    private void loadData() {
+        Cursor cursor = dbHelper.getStudentTable(cid);
+        studentItems.clear();
+        while (cursor.moveToNext()){
+            long sid = cursor.getLong(cursor.getColumnIndex(DbHelper.S_ID));
+            int roll = cursor.getInt(cursor.getColumnIndex(DbHelper.STUDENT_NAME_KEY));
+            String name = cursor.getString(cursor.getColumnIndex(DbHelper.STUDENT_NAME_KEY));
+            studentItems.add(new StudentItem(sid,roll,name));
+        }
+        cursor.close();
     }
 
     private void changeStatus(int position) {
@@ -91,12 +111,16 @@ public class StudentActivity extends AppCompatActivity {
     private void showAddStudentDialog() {
         MyDialog dialog = new MyDialog();
         dialog.show(getSupportFragmentManager(),MyDialog.STUDENT_ADD_DIALOG);
-        dialog.setListener(this::addStudent);
+        dialog.setListener((roll,name)->addStudent(roll,name));
     }
 
-    private void addStudent(String roll, String name) {
-        if (roll != null && !roll.isEmpty() && name != null && !name.isEmpty()) {
-            studentItems.add(new StudentItem(roll, name));
+    private void addStudent(String roll_string, String name) {
+        int roll = Integer.parseInt(roll_string);
+        //roll != null && !roll.isEmpty() &&
+        if ( name != null && !name.isEmpty()) {
+           long sid = dbHelper.addStudent(cid,roll,name);
+           StudentItem studentItem = new StudentItem(sid,roll,name);
+            studentItems.add(studentItem);
            // adapter.notifyItemInserted(studentItems.size()-1);
             adapter.notifyDataSetChanged();
         } else {
