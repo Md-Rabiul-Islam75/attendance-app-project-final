@@ -39,12 +39,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_STUDENT_TABLE =
             "CREATE TABLE "+ STUDENT_TABLE_NAME +
-                    "( "+
+                    " ( "+
                     S_ID+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
                     C_ID + " INTEGER NOT NULL, "+
                     STUDENT_NAME_KEY + " TEXT NOT NULL, "+
                     STUDENT_ROLL_KEY + " INTEGER, "+
-                    "FOREIGN KEY ( "+C_ID+") REFERENCES "+ CLASS_TABLE_NAME + "(" + C_ID+")"+
+                    " FOREIGN KEY ( "+C_ID+") REFERENCES "+ CLASS_TABLE_NAME + "(" + C_ID+")"+
                     ")";
 
     private static final String DROP_STUDENT_TABLE = "DROP TABLE IF EXISTS " + STUDENT_TABLE_NAME;

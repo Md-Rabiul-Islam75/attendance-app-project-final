@@ -1,6 +1,7 @@
 package com.example.projectnew;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
+public class   StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
     ArrayList<StudentItem> studentItems;
     Context context;
     private OnItemClickListener onItemClickListener;
@@ -30,7 +31,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         this.context = context;
     }
 
-    public static class StudentViewHolder extends RecyclerView.ViewHolder {
+    public static class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView roll;
         TextView name;
         TextView status;
@@ -46,7 +47,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             // Only set click listener if one is provided
             if (onItemClickListener != null) {
                 itemView.setOnClickListener(v -> onItemClickListener.onClick(getAdapterPosition()));
+                itemView.setOnCreateContextMenuListener(this);
             }
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(getAdapterPosition(), 0, 0, "Edit");
+            menu.add(getAdapterPosition(), 1, 0, "Delete");
         }
     }
 

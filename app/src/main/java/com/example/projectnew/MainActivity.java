@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     private void addClass(String className, String subjectName) {
         long cid = dbHelper.addClass(className,subjectName);
         ClassItem classItem = new ClassItem(cid,className,subjectName);
