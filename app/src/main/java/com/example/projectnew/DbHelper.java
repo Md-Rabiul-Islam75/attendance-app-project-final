@@ -1,5 +1,6 @@
 package com.example.projectnew;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     //class table
    private   static final String CLASS_TABLE_NAME= "CLASS_TABLE";
@@ -19,10 +20,10 @@ public class DbHelper extends SQLiteOpenHelper {
     public   static final String SUBJECT_NAME_KEY = "SUBJECT_NAME";
 
     private  static final String CREATE_CLASS_TABLE =
-            "CREATE TABLE " +CLASS_TABLE_NAME + "("+
-            C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            "CREATE TABLE " +CLASS_TABLE_NAME + "( "+
+            C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             CLASS_NAME_KEY + " TEXT NOT NULL," +
-            SUBJECT_NAME_KEY + " TEXT NOT NULL," +
+            SUBJECT_NAME_KEY + " TEXT NOT NULL, " +
             "UNIQUE (" + CLASS_NAME_KEY + "," + SUBJECT_NAME_KEY + ")" +
             ")";
 
@@ -60,14 +61,14 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     private static final String CREATE_STATUS_TABLE =
-            "CREATE TABLE "+STATUS_TABLE_NAME +
-                    "("+
-                    STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+
-                    S_ID + " INTEGER NOT NULL, "+
-                    DATE_KEY+" DATE NOT NULL, "+
-                    STATUS_KEY + " TEXT NOT NULL, "+
-                    " UNIQUE ("+ S_ID + "," + DATE_KEY+"),"+
-                    "FOREIGN KEY ("+ S_ID+") REFERENCES "+ STUDENT_TABLE_NAME+ "( "+S_ID+")"+
+            "CREATE TABLE "+ STATUS_TABLE_NAME +
+                    "(" +
+                    STATUS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    S_ID + " INTEGER NOT NULL, " +
+                    DATE_KEY + " DATE NOT NULL, " +
+                    STATUS_KEY + " TEXT NOT NULL, " +
+                    " UNIQUE (" + S_ID + "," + DATE_KEY + ")," +
+                    " FOREIGN KEY (" + S_ID + ") REFERENCES " + STUDENT_TABLE_NAME + "( " + S_ID + ")" +
                     ");";
 
 
@@ -150,5 +151,31 @@ public class DbHelper extends SQLiteOpenHelper {
         return database.update(STUDENT_TABLE_NAME, values, S_ID + "=?", new String[]{String.valueOf(sid)});
     }
 
+    long addStatus(long sid, String date, String status) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(S_ID, sid);
+        values.put(DATE_KEY, date);
+        values.put(STATUS_KEY, status);
+        return database.insert(STATUS_TABLE_NAME, null, values);
+    }
 
+    long updateStatus(long sid, String date, String status) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(STATUS_KEY, status);
+        String whereClause = DATE_KEY + "='" + date + "' AND " + S_ID + "=" + sid;
+        return database.update(STATUS_TABLE_NAME, values, whereClause, null);
+    }
+
+
+    String getStatus(long sid, String date) {
+        String status=null;
+        SQLiteDatabase database = this.getReadableDatabase();
+        String whereClause = DATE_KEY + "='" + date + "' AND " + S_ID + "=" + sid;
+        Cursor cursor = database.query(STATUS_TABLE_NAME,null,whereClause,null,null,null,null);
+        if(cursor.moveToFirst())
+            status = cursor.getString(cursor.getColumnIndex(STATUS_KEY));
+        return status;
+    }
 }

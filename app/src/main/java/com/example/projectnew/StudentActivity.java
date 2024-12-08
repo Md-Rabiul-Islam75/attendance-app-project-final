@@ -64,7 +64,7 @@ public class StudentActivity extends AppCompatActivity {
         adapter = new StudentAdapter(this,studentItems);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::changeStatus);
-
+        loadStatusData();
     }
 
     private void loadData() {
@@ -95,6 +95,7 @@ public class StudentActivity extends AppCompatActivity {
         subtitle= toolbar.findViewById(R.id.subtitle_toolbar);
         ImageButton back = toolbar.findViewById(R.id.back);
         ImageButton save = toolbar.findViewById(R.id.save);
+        save.setOnClickListener(v -> saveStatus());
 
 
         title.setText(className);
@@ -105,6 +106,24 @@ public class StudentActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
 
+    }
+
+    private void saveStatus() {
+        for (StudentItem studentItem : studentItems){
+            String status = studentItem.getStatus();
+            if (status!="P") status= "A";
+           long value = dbHelper.addStatus(studentItem.getSid(),calendar.getDate(),status);
+           if (value==-1) dbHelper.updateStatus(studentItem.getSid(),calendar.getDate(),status);
+        }
+    }
+
+    private void loadStatusData(){
+        for (StudentItem studentItem : studentItems){
+            String status = dbHelper.getStatus(studentItem.getSid(),calendar.getDate());
+            if (status!=null) studentItem.setStatus(status);
+            else studentItem.setStatus("");
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private boolean onMenuItemClick(MenuItem menuItem) {
@@ -125,6 +144,7 @@ public class StudentActivity extends AppCompatActivity {
     private void onCalendarOkClicked(int year, int month, int day) {
         calendar.setDate(year, month, day);
         subtitle.setText(subjectName+" | "+calendar.getDate());
+        loadStatusData();
     }
 
     private void showAddStudentDialog() {
