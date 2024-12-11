@@ -22,13 +22,13 @@ public class DbHelper extends SQLiteOpenHelper {
     private  static final String CREATE_CLASS_TABLE =
             "CREATE TABLE " +CLASS_TABLE_NAME + "( "+
             C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-            CLASS_NAME_KEY + " TEXT NOT NULL," +
+            CLASS_NAME_KEY + " TEXT NOT NULL, " +
             SUBJECT_NAME_KEY + " TEXT NOT NULL, " +
             "UNIQUE (" + CLASS_NAME_KEY + "," + SUBJECT_NAME_KEY + ")" +
             ")";
 
     private static final String DROP_CLASS_TABLE = " DROP TABLE IF EXISTS " + CLASS_TABLE_NAME;
-    private static final String SELECT_CLASS_TABLE = " SELECT * FROM "+CLASS_TABLE_NAME;
+    private static final String SELECT_CLASS_TABLE = "SELECT * FROM "+ CLASS_TABLE_NAME;
 
 
     //student table
@@ -45,7 +45,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     C_ID + " INTEGER NOT NULL, "+
                     STUDENT_NAME_KEY + " TEXT NOT NULL, "+
                     STUDENT_ROLL_KEY + " INTEGER, "+
-                    " FOREIGN KEY ( "+C_ID+") REFERENCES "+ CLASS_TABLE_NAME + "(" + C_ID+")"+
+                    "FOREIGN KEY ( "+C_ID+" ) REFERENCES "+ CLASS_TABLE_NAME + "(" + C_ID+ ")"+
                     ")";
 
     private static final String DROP_STUDENT_TABLE = "DROP TABLE IF EXISTS " + STUDENT_TABLE_NAME;
@@ -169,6 +169,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
+    @SuppressLint("Range")
     String getStatus(long sid, String date) {
         String status=null;
         SQLiteDatabase database = this.getReadableDatabase();

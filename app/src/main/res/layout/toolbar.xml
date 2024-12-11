@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.appcompat.widget.Toolbar
@@ -59,8 +60,10 @@
                 android:background="@android:color/transparent"
                 android:textColor="#239C28"
                 android:src="@drawable/icon_save"
+                android:tint="#239C28"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                tools:ignore="UseAppTint" />
 
 
         </RelativeLayout>

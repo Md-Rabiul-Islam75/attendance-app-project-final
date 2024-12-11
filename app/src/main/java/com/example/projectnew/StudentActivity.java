@@ -1,5 +1,6 @@
 package com.example.projectnew;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -71,9 +72,9 @@ public class StudentActivity extends AppCompatActivity {
         Cursor cursor = dbHelper.getStudentTable(cid);
         studentItems.clear();
         while (cursor.moveToNext()){
-            long sid = cursor.getLong(cursor.getColumnIndex(DbHelper.S_ID));
-            int roll = cursor.getInt(cursor.getColumnIndex(DbHelper.STUDENT_ROLL_KEY));
-            String name = cursor.getString(cursor.getColumnIndex(DbHelper.STUDENT_NAME_KEY));
+            @SuppressLint("Range") long sid = cursor.getLong(cursor.getColumnIndex(DbHelper.S_ID));
+            @SuppressLint("Range") int roll = cursor.getInt(cursor.getColumnIndex(DbHelper.STUDENT_ROLL_KEY));
+            @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(DbHelper.STUDENT_NAME_KEY));
             studentItems.add(new StudentItem(sid,roll,name));
         }
         cursor.close();

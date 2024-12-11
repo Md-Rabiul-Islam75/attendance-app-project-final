@@ -13,8 +13,6 @@ public class StudentItem {
         status="";
     }
 
-
-
     public int getRoll() {
         return roll;
     }
